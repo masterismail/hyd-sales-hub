@@ -3,8 +3,9 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vi => ({
-  // Use '/' for ent, '/hyd-sales-hub/' for production (GitHub Pages)
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  // Use '/' for development, '/hyd-sales-hub/' for production (GitHub Pages)
   base: mode === 'production' ? '/hyd-sales-hub/' : '/',
   
   server: {
