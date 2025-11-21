@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
+import { useState } from "react";
 
 const listings = [
   {
@@ -11,7 +12,7 @@ const listings = [
     year: "2020",
     km: "35,000 km",
     category: "Cars",
-    image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&auto=format&fit=crop",
+    video: "/videos/maruti-car-2.mp4",
   },
   {
     id: 2,
@@ -20,7 +21,7 @@ const listings = [
     year: "2021",
     km: "8,500 km",
     category: "Bikes",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop",
+    video: "/videos/bike-2.mp4",
   },
   {
     id: 3,
@@ -29,7 +30,7 @@ const listings = [
     year: "2022",
     km: "12,000 km",
     category: "Scooters",
-    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop",
+    video: "/videos/activa-2.mp4",
   },
   {
     id: 4,
@@ -41,6 +42,75 @@ const listings = [
     image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=800&auto=format&fit=crop",
   },
 ];
+
+const ListingCard = ({ listing }: { listing: typeof listings[0] }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useState<HTMLVideoElement | null>(null)[0];
+
+  return (
+    <Card
+      className="group overflow-hidden border-border transition-all duration-300 hover:border-primary hover:shadow-[var(--card-shadow-hover)]"
+      onMouseEnter={() => {
+        setIsHovered(true);
+        if (videoRef) videoRef.play();
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        if (videoRef) {
+          videoRef.pause();
+          videoRef.currentTime = 0;
+        }
+      }}
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+        {listing.video ? (
+          <video
+            ref={(el) => {
+              if (el) {
+                (videoRef as any) = el;
+              }
+            }}
+            src={listing.video}
+            className="h-full w-full object-cover"
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img
+            src={listing.image}
+            alt={listing.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        )}
+        <Badge className="absolute right-3 top-3 bg-primary text-primary-foreground">
+          {listing.category}
+        </Badge>
+      </div>
+      <CardContent className="p-4">
+        <h3 className="mb-2 text-lg font-semibold line-clamp-1">{listing.title}</h3>
+        <p className="mb-3 text-2xl font-bold text-primary">{listing.price}</p>
+        <div className="flex gap-3 text-sm text-muted-foreground">
+          <span>{listing.year}</span>
+          <span>•</span>
+          <span>{listing.km}</span>
+        </div>
+      </CardContent>
+      <CardFooter className="p-4 pt-0">
+        <Button
+          size="sm"
+          className="w-full"
+          asChild
+        >
+          <a href="https://wa.me/917337003606" target="_blank" rel="noopener noreferrer">
+            <Phone className="mr-2 h-4 w-4" />
+            Contact Seller
+          </a>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const FeaturedListings = () => {
   return (
@@ -57,42 +127,7 @@ const FeaturedListings = () => {
         
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {listings.map((listing) => (
-            <Card
-              key={listing.id}
-              className="group overflow-hidden border-border transition-all duration-300 hover:border-primary hover:shadow-[var(--card-shadow-hover)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={listing.image}
-                  alt={listing.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <Badge className="absolute right-3 top-3 bg-primary text-primary-foreground">
-                  {listing.category}
-                </Badge>
-              </div>
-              <CardContent className="p-4">
-                <h3 className="mb-2 text-lg font-semibold line-clamp-1">{listing.title}</h3>
-                <p className="mb-3 text-2xl font-bold text-primary">{listing.price}</p>
-                <div className="flex gap-3 text-sm text-muted-foreground">
-                  <span>{listing.year}</span>
-                  <span>•</span>
-                  <span>{listing.km}</span>
-                </div>
-              </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Button
-                  size="sm"
-                  className="w-full"
-                  asChild
-                >
-                  <a href="https://wa.me/917337003606" target="_blank" rel="noopener noreferrer">
-                    <Phone className="mr-2 h-4 w-4" />
-                    Contact Seller
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
+            <ListingCard key={listing.id} listing={listing} />
           ))}
         </div>
       </div>
