@@ -13,9 +13,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* IMPORTANT: The basename must match the 'base' in vite.config.ts */}
-      {/* If your repo is 'my-app', this should be '/my-app' */}
-      <BrowserRouter basename="/hyd-sales-hub">
+      {/* Use import.meta.env.BASE_URL to automatically sync with vite.config.ts */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
