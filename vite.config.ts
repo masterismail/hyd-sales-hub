@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // ADD THIS LINE BELOW - Replace 'hyd-sales-hub' if your repo name is different
+  base: "/hyd-sales-hub/", 
+  
   server: {
     host: "::",
     port: 8080,
