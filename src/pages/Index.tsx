@@ -6,12 +6,8 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <Categories />
-      <FeaturedListings />
-      <Footer />
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <h1 className="text-2xl font-semibold text-foreground">Page Unavailable</h1>
     </div>
   );
 };
