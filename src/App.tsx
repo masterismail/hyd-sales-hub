@@ -10,16 +10,19 @@ const queryClient = new QueryClient();
 
 // ... imports
 
+// src/App.tsx
+// ... imports
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* ADD THE BASENAME PROP HERE */}
+      {/* CHANGE THIS to match your actual GitHub repo name */}
+      {/* Example: basename="/my-sales-app" */}
       <BrowserRouter basename="/hyd-sales-hub">
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
