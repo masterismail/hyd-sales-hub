@@ -3,26 +3,22 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import Index from "./pages/Index.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
-
-// ... imports
-
-// src/App.tsx
-// ... imports
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* CHANGE THIS to match your actual GitHub repo name */}
-      {/* Example: basename="/my-sales-app" */}
+      {/* IMPORTANT: The basename must match the 'base' in vite.config.ts */}
+      {/* If your repo is 'my-app', this should be '/my-app' */}
       <BrowserRouter basename="/hyd-sales-hub">
         <Routes>
           <Route path="/" element={<Index />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
