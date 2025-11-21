@@ -2,7 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
 
 const listings = [
   {
@@ -44,32 +44,25 @@ const listings = [
 ];
 
 const ListingCard = ({ listing }: { listing: typeof listings[0] }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const videoRef = useState<HTMLVideoElement | null>(null)[0];
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   return (
     <Card
       className="group overflow-hidden border-border transition-all duration-300 hover:border-primary hover:shadow-[var(--card-shadow-hover)]"
       onMouseEnter={() => {
-        setIsHovered(true);
-        if (videoRef) videoRef.play();
+        if (videoRef.current) videoRef.current.play();
       }}
       onMouseLeave={() => {
-        setIsHovered(false);
-        if (videoRef) {
-          videoRef.pause();
-          videoRef.currentTime = 0;
+        if (videoRef.current) {
+          videoRef.current.pause();
+          videoRef.current.currentTime = 0;
         }
       }}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {listing.video ? (
           <video
-            ref={(el) => {
-              if (el) {
-                (videoRef as any) = el;
-              }
-            }}
+            ref={videoRef}
             src={listing.video}
             className="h-full w-full object-cover"
             loop
