@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import { useRef } from "react";
 
+//
 const listings = [
   {
     id: 1,
@@ -12,7 +13,8 @@ const listings = [
     year: "2020",
     km: "35,000 km",
     category: "Cars",
-    video: "/videos/maruti-car-2.mp4",
+    // Use import.meta.env.BASE_URL to handle the subpath automatically
+    video: `${import.meta.env.BASE_URL}videos/maruti-car-2.mp4`,
   },
   {
     id: 2,
@@ -21,7 +23,7 @@ const listings = [
     year: "2021",
     km: "8,500 km",
     category: "Bikes",
-    video: "/videos/bike-2.mp4",
+    video: `${import.meta.env.BASE_URL}videos/bike-2.mp4`,
   },
   {
     id: 3,
@@ -30,7 +32,7 @@ const listings = [
     year: "2022",
     km: "12,000 km",
     category: "Scooters",
-    video: "/videos/activa-2.mp4",
+    video: `${import.meta.env.BASE_URL}videos/activa-2.mp4`,
   },
   {
     id: 4,
@@ -42,7 +44,6 @@ const listings = [
     image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=800&auto=format&fit=crop",
   },
 ];
-
 const ListingCard = ({ listing }: { listing: typeof listings[0] }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
